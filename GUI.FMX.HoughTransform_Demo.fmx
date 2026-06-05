@@ -1,0 +1,129 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 1106
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object img_SourceImage: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 192.000000000000000000
+    Position.Y = 64.000000000000000000
+    Size.Width = 249.000000000000000000
+    Size.Height = 217.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object rctngl1: TRectangle
+    Align = Left
+    Size.Width = 161.000000000000000000
+    Size.Height = 480.000000000000000000
+    Size.PlatformDefault = False
+    object btn_Close: TCornerButton
+      Position.X = 24.000000000000000000
+      Position.Y = 400.000000000000000000
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 105.000000000000000000
+      Size.Height = 41.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      Text = 'btn_Close'
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+      OnClick = btn_CloseClick
+    end
+    object btn_LoadImage: TCornerButton
+      Position.X = 24.000000000000000000
+      Position.Y = 56.000000000000000000
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 105.000000000000000000
+      Size.Height = 57.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      Text = 'btn_LoadImage'
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+      OnClick = btn_LoadImageClick
+    end
+    object btn_HoughCircle: TCornerButton
+      Position.X = 24.000000000000000000
+      Position.Y = 121.000000000000000000
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 105.000000000000000000
+      Size.Height = 56.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Text = 'btn_HoughCircle'
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+      OnClick = btn_HoughCircleClick
+    end
+    object btn_HoughLine: TCornerButton
+      Position.X = 24.000000000000000000
+      Position.Y = 200.000000000000000000
+      Sides = [Top, Left, Bottom, Right]
+      Size.Width = 105.000000000000000000
+      Size.Height = 41.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'btn_HoughLine'
+      XRadius = 3.000000000000000000
+      YRadius = 3.000000000000000000
+      OnClick = btn_HoughLineClick
+    end
+    object spnbx: TSpinBox
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 4
+      Cursor = crIBeam
+      Position.X = 24.000000000000000000
+      Position.Y = 296.000000000000000000
+    end
+    object spnbx_HoughTreshold: TSpinBox
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 5
+      Cursor = crIBeam
+      Position.X = 24.000000000000000000
+      Position.Y = 344.000000000000000000
+    end
+  end
+  object dlgOpen: TOpenDialog
+    Left = 792
+    Top = 368
+  end
+  object img_HoughResult: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 480.000000000000000000
+    Position.Y = 64.000000000000000000
+    Size.Width = 249.000000000000000000
+    Size.Height = 217.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object img_THoughAccumulator: TImage
+    MultiResBitmap = <
+      item
+      end>
+    Position.X = 776.000000000000000000
+    Position.Y = 64.000000000000000000
+    Size.Width = 233.000000000000000000
+    Size.Height = 217.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object mmo_log: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Position.X = 192.000000000000000000
+    Position.Y = 414.000000000000000000
+    Size.Width = 841.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Viewport.Width = 837.000000000000000000
+    Viewport.Height = 46.000000000000000000
+  end
+end

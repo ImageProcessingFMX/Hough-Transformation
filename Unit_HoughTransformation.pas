@@ -18,19 +18,21 @@ unit Unit_HoughTransformation;
 
 interface
 
-uses Windows, Messages, SysUtils, Variants, Classes,
+uses SysUtils, Variants, Classes,
   Math,
-  StrUtils, Contnrs,
+  StrUtils, Contnrs, Types, System.UITypes,
 {$IFDEF  FRAMEWORK_VCL}
   VCL.Graphics;
 {$ENDIF}
 {$IFDEF  FRAMEWORK_FMX}
-FMX.Graphics, System.UITypes;
+FMX.Graphics;
 {$ENDIF}
 
 type
 
+  /// <summary>
   /// 2 D coordinate definition, Float data type
+  /// </summary>
   FPoint = record
     X: Real;
     /// X value
@@ -38,7 +40,9 @@ type
     /// Y value
   end;
 
-  /// 3 D coordinate definition  (integer values)
+  /// <summary>
+  /// 3 D coordinate definition (integer values)
+  /// </summary>
   THPoint3D = record
     X: integer;
     Y: integer;
@@ -50,44 +54,54 @@ type
   THoughResult = array of array of integer;
   THoughFinal = Array of THPoint3D;
   TImageContentList = TObjectList;
-
+  /// <summary>
   /// Hough Transformation  -> Algo for Line detection
+  /// </summary>
 procedure Hough_LineDetection(AnalysisBitmap: TBitMap;
   var aHoughResult: THoughResult);
-
+/// <summary>
 /// Hough Transformation  -> Algo for Circle  detection
+/// </summary>
 procedure Hough_CircleDetection(AnalysisBitmap: TBitMap;
   var aHoughResult: THoughResult; r: integer);
-
+/// <summary>
 /// show accumulator Box
+/// </summary>
 procedure HoughresultToBitMap(ResultBitmap: TBitMap;
   aHoughResult: THoughResult);
-
+/// <summary>
 /// screen for maxima inside the Hough accu box
+/// </summary>
 procedure HoughResultToParameter(aHoughResult: THoughResult; Range: Real;
   var aHoughFinal: THoughFinal);
-
+/// <summary>
 /// does a pixel have a certain value or not ???
+/// </summary>
 function IsPixel(xpos, ypos: integer; aBitmap: TBitMap;
   ThresHold: integer): boolean;
-
+/// <summary>
 /// increase sensitivity
+/// </summary>
 procedure HoughResultToParameterDynamic(aHoughResult: THoughResult; Range: Real;
   var aHoughFinal: THoughFinal);
-
+/// <summary>
 /// show accumulator Box as lines
+/// </summary>
 procedure HoughResultLineParameterToBitMap(var aAnalysisBitmap: TBitMap;
   aHoughFinal: THoughFinal);
-
+/// <summary>
 /// show accumulator Box as circles
+/// </summary>
 procedure HoughResultCircleParameterToBitMap(var aAnalysisBitmap: TBitMap;
   aHoughFinal: THoughFinal; aRadius: integer);
-
+/// <summary>
 /// convert the Lines into TThicklines ObjectList
+/// </summary>
 procedure HoughResultLineParameterToObjectArray(aAnalysisBitmap: TBitMap;
   aHoughFinal: THoughFinal; aImageContentList: TImageContentList);
-
-/// set aq values insde the HOUGH array to ZERO
+/// <summary>
+/// set all values insde the HOUGH array to ZERO
+/// </summary>
 function ResetArray(var aHoughResult: THoughResult): integer;
 
 implementation
@@ -135,8 +149,6 @@ begin
 end;
 
 {$ENDIF}
-
-
 {$IFDEF  FRAMEWORK_FMX}
 
 function IsPixel(xpos, ypos: integer; aBitmap: TBitMap;
@@ -145,8 +157,7 @@ var
   r, g, b, mean: integer;
 
   bitdata: TBitmapData;
-  I: integer;
-  J: integer;
+
   C: TAlphaColor;
 begin
   if (aBitmap.Map(TMapAccess.Read, bitdata)) then
@@ -211,7 +222,7 @@ begin
       begin
         // iterate the unknown variables :   ( r, theta )
         // loop theta ->  to be able to determine the other unknown -> r
-        for theta := 0 to max_theta do
+        for theta := 0 to max_theta -1 do
         begin
           r := X * cos(theta * PI / max_theta) + Y *
             sin(theta * PI / max_theta);
@@ -689,22 +700,23 @@ begin
   if (max = 0) then
     max := 1;
 
-  if (ResultBitmap.Map(TMapAccess.ReadWrite, bitdata)) then
+  if (ResultBitmap.Map(TMapAccess.Write, bitdata)) then
     try
 
       For h := 0 to ResultBitmap.Height - 1 do
         for w := 0 to ResultBitmap.Width - 1 do
         begin
+
           xquer := round(aHoughResult[w, h] / max * 255);
 
           // C := bitdata.GetPixel(h, w);
 
           TAlphaColorRec(C).r := xquer;
-          TAlphaColorRec(C).g := xquer;
+          TAlphaColorRec(C).g := 25;
           TAlphaColorRec(C).b := xquer;
           TAlphaColorRec(C).A := 255;
 
-          bitdata.SetPixel(h, w, C)
+          bitdata.SetPixel(w, h, C)
 
         end;
     finally
@@ -725,7 +737,6 @@ var
   h, w: integer;
   xquer: integer;
   max: integer;
-  bitdata: TBitmapData;
 begin
 
   n := length(aHoughResult);
